@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildan // Cyberpunk Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Devicon for skills icons -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"JetBrains Mono"', "monospace"],
+              display: ['"Orbitron"', "sans-serif"],
+            },
+            colors: {
+              cyber: {
+                bg: "#0a0a12",
+                card: "#12121f",
+                cyan: "#00f0ff",
+                magenta: "#ff007f",
+                yellow: "#f3e600",
+                green: "#00ff66",
+                darkborder: "#1f293d",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Cyberpunk Scanline Overlay */
+      .scanlines {
+        background: linear-gradient(
+            rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%
+          ),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.03),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.03)
+          );
+        background-size: 100% 3px, 6px 100%;
+        pointer-events: none;
+      }
+
+      /* Cyber Grid Background */
+      .cyber-grid {
+        background-image: linear-gradient(
+            to right,
+            rgba(0, 240, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 0, 127, 0.05) 1px,
+            transparent 1px
+          );
+        background-size: 32px 32px;
+      }
+
+      /* Glitch Effect */
+      .glitch-text {
+        position: relative;
+        display: inline-block;
+      }
+      .glitch-text::before,
+      .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip: rect(0, 0, 0, 0);
+      }
+      .glitch-text::before {
+        left: 2px;
+        text-shadow: -2px 0 #ff007f;
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
+      }
+      .glitch-text::after {
+        left: -2px;
+        text-shadow: -2px 0 #00f0ff;
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-anim-1 {
+        0% { clip: rect(20px, 9999px, 44px, 0); }
+        20% { clip: rect(10px, 9999px, 80px, 0); }
+        40% { clip: rect(65px, 9999px, 15px, 0); }
+        60% { clip: rect(30px, 9999px, 90px, 0); }
+        80% { clip: rect(5px, 9999px, 50px, 0); }
+        100% { clip: rect(40px, 9999px, 75px, 0); }
+      }
+
+      @keyframes glitch-anim-2 {
+        0% { clip: rect(50px, 9999px, 12px, 0); }
+        20% { clip: rect(5px, 9999px, 60px, 0); }
+        40% { clip: rect(85px, 9999px, 25px, 0); }
+        60% { clip: rect(15px, 9999px, 95px, 0); }
+        80% { clip: rect(70px, 9999px, 40px, 0); }
+        100% { clip: rect(25px, 9999px, 65px, 0); }
+      }
+
+      /* Neon Box Glows */
+      .neon-border-cyan {
+        border: 1px solid #00f0ff;
+        box-shadow: 0 0 12px rgba(0, 240, 255, 0.35), inset 0 0 12px rgba(0, 240, 255, 0.15);
+      }
+      .neon-border-magenta {
+        border: 1px solid #ff007f;
+        box-shadow: 0 0 12px rgba(255, 0, 127, 0.35), inset 0 0 12px rgba(255, 0, 127, 0.15);
+      }
+      .neon-btn {
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .neon-btn:hover {
+        box-shadow: 0 0 20px #00f0ff, 0 0 40px rgba(0, 240, 255, 0.5);
+      }
+
+      /* Cursor blink for typewriter */
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      .cyber-cursor {
+        display: inline-block;
+        width: 10px;
+        background-color: #00f0ff;
+        animation: blink 0.8s infinite;
+      }
+
+      /* Glitch Overdrive Mode */
+      body.glitch-overdrive .glitch-text::before {
+        animation-duration: 0.35s;
+        text-shadow: -4px 0 #ff007f;
+      }
+      body.glitch-overdrive .glitch-text::after {
+        animation-duration: 0.45s;
+        text-shadow: 4px 0 #00f0ff;
+      }
+      body.glitch-overdrive .scanlines {
+        background-size: 100% 2px, 4px 100%;
+        opacity: 0.9;
+      }
+
+      /* Scroll Reveal Animation */
+      .reveal-node {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-node.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a12;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #00f0ff;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="bg-cyber-bg text-slate-200 font-sans selection:bg-cyber-magenta selection:text-white relative overflow-x-hidden">
+    <!-- Interactive Particle / Matrix Canvas Background -->
+    <canvas id="cyber-canvas" class="fixed inset-0 z-0 pointer-events-none opacity-45"></canvas>
+
+    <!-- Scanline & Grid overlay -->
+    <div class="fixed inset-0 scanlines z-50 pointer-events-none"></div>
+    <div class="fixed inset-0 cyber-grid z-0 pointer-events-none opacity-40"></div>
+
+    <!-- Custom Neon Cursor Follower (Desktop) -->
+    <div id="cursor-ring" class="hidden lg:block fixed w-7 h-7 rounded-full border border-cyber-cyan/70 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
+
+    <!-- Toast / Message Box -->
+    <div
+      id="cyber-toast"
+      class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-500 pointer-events-none"
+    >
+      <div
+        class="bg-cyber-card border-2 border-cyber-cyan text-cyber-cyan px-5 py-4 rounded shadow-[0_0_20px_rgba(0,240,255,0.4)] flex items-center gap-3 font-mono text-sm"
+      >
+        <i class="fa-solid fa-terminal text-lg animate-pulse"></i>
+        <div>
+          <p class="font-bold uppercase tracking-wider text-white">System Broadcast</p>
+          <p id="toast-text" class="text-xs text-slate-300">Message successfully dispatched.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-cyber-bg/90 backdrop-blur-md border-b border-cyber-cyan/30">
+      <!-- Top Cyberpunk System HUD Status Strip -->
+      <div class="bg-cyber-card/95 border-b border-cyber-cyan/20 text-[11px] font-mono text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5 text-cyber-green">
+              <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span>
+              SYS.ONLINE
+            </span>
+            <span class="hidden sm:inline text-slate-500">|</span>
+            <span class="hidden sm:inline">NODE: <strong class="text-cyber-cyan" id="visitor-id">ID-WLDN-04</strong></span>
+            <span class="hidden md:inline text-slate-500">|</span>
+            <span class="hidden md:inline">TIME: <strong class="text-cyber-yellow" id="hud-clock">00:00:00</strong></span>
+          </div>
+
+          <!-- Interactive Audio-Visual & Glitch Overdrive Controls -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <button
+              id="toggle-sound"
+              type="button"
+              class="px-2 py-0.5 rounded border border-cyber-cyan/40 text-cyber-cyan hover:bg-cyber-cyan hover:text-cyber-bg transition-all flex items-center gap-1.5"
+              title="Toggle Cyber Synth UI Sound"
+            >
+              <i id="sound-icon" class="fa-solid fa-volume-xmark"></i>
+              <span id="sound-label">SFX: OFF</span>
+            </button>
+            <button
+              id="toggle-overdrive"
+              type="button"
+              class="px-2 py-0.5 rounded border border-cyber-magenta/40 text-cyber-magenta hover:bg-cyber-magenta hover:text-white transition-all flex items-center gap-1.5"
+              title="Toggle Glitch Overdrive Intensity"
+            >
+              <i class="fa-solid fa-bolt"></i>
+              <span id="overdrive-label">OVERDRIVE: STD</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <!-- Logo -->
+        <h4 class="logo font-display font-black text-lg sm:text-xl tracking-wider text-white">
+          <a href="" class="hover:text-cyber-cyan transition-colors flex items-center gap-2">
+            <span class="text-cyber-magenta">&gt;</span> My <span class="text-cyber-cyan glitch-text" data-text="Portfolio">Portfolio</span>
+          </a>
+        </h4>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:block">
+          <ul class="nav_links flex items-center gap-8 font-mono text-sm uppercase tracking-widest text-slate-300">
+            <li><a href="#about" class="hover:text-cyber-cyan transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-cyber-cyan hover:after:w-full after:transition-all">About</a></li>
+            <li><a href="#education" class="hover:text-cyber-cyan transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-cyber-cyan hover:after:w-full after:transition-all">Education</a></li>
+            <li><a href="#skill" class="hover:text-cyber-cyan transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-cyber-cyan hover:after:w-full after:transition-all">Skills</a></li>
+            <li><a href="#contact" class="hover:text-cyber-cyan transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-cyber-cyan hover:after:w-full after:transition-all">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- WhatsApp Button -->
+        <div class="flex items-center gap-3">
+          <a
+            class="nav_btn"
+            target="_blank"
+            href="https://api.whatsapp.com/send?phone=6289687601023&text=%F0%9F%98%B1%F0%9F%98%B1%F0%9F%98%B1"
+          >
+            <button class="neon-btn bg-cyber-card border border-cyber-cyan text-cyber-cyan font-mono text-xs sm:text-sm px-4 py-2.5 rounded font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-cyber-cyan hover:text-cyber-bg transition-all">
+              <i class="fa fa-whatsapp text-base"></i> Let's Talk
+            </button>
+          </a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button id="menu-toggle" aria-label="Toggle Menu" class="md:hidden text-cyber-cyan p-2 text-xl">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-cyber-card border-b border-cyber-cyan/30 px-6 py-4 space-y-3 font-mono text-sm uppercase">
+        <a href="#about" class="block py-2 text-slate-300 hover:text-cyber-cyan">About</a>
+        <a href="#education" class="block py-2 text-slate-300 hover:text-cyber-cyan">Education</a>
+        <a href="#skill" class="block py-2 text-slate-300 hover:text-cyber-cyan">Skills</a>
+        <a href="#contact" class="block py-2 text-slate-300 hover:text-cyber-cyan">Contact</a>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="relative pt-44 pb-28 sm:pt-48 sm:pb-36 z-10 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="about lg:col-span-7 space-y-6 reveal-node">
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-block px-3 py-1 rounded bg-cyber-magenta/15 border border-cyber-magenta text-cyber-magenta font-mono text-xs uppercase tracking-widest">
+              <span>hallo ich bin wildan</span>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-cyber-cyan/10 border border-cyber-cyan/40 text-cyber-cyan font-mono text-[11px]">ORIGIN: JAMBI, ID</span>
+            <span class="px-2.5 py-1 rounded bg-cyber-yellow/10 border border-cyber-yellow/40 text-cyber-yellow font-mono text-[11px]">TARGET: MIT &rarr; GOOGLE</span>
+          </div>
+
+          <h1 class="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-wide uppercase leading-tight">
+            <span id="typewriter-title" class="glitch-text" data-text="Ich bin Webentwickler-Anfänger.">Ich bin Webentwickler-Anfänger.</span><span class="cyber-cursor h-8 sm:h-12 align-middle inline-block"></span>
+          </h1>
+
+          <p class="font-mono text-slate-300 text-sm sm:text-base leading-relaxed border-l-2 border-cyber-cyan pl-4 bg-cyber-card/40 p-3 rounded-r">
+            Ich stamme aus Jambi atau indonesia dan habe das islamische Internat Daar el Qolam 4 besucht. <br class="hidden sm:block" />
+            Nach meinem Abschluss strebe ich an, an das MIT zu gehen.<br class="hidden sm:block" />
+            Ich strebe danach, bei Google zu arbeiten. <br class="hidden sm:block" />
+            Bitte erlaube mir, erfolgreich zu sein. <br class="hidden sm:block" />
+            in web development.
+          </p>
+
+          <!-- Interactive Tabbed System Bio & Mission Log (Bilingual Explanation) -->
+          <div class="bg-cyber-card/80 border border-cyber-cyan/40 rounded-lg p-4 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cyber-cyan/20 pb-2.5">
+              <span class="font-mono text-xs uppercase tracking-wider text-cyber-cyan flex items-center gap-2">
+                <i class="fa-solid fa-microchip"></i> SYSTEM BIO &amp; MISSION LOG
+              </span>
+              <div class="flex gap-1.5 font-mono text-xs">
+                <button type="button" data-bio-tab="id" class="bio-tab-btn px-2.5 py-1 rounded bg-cyber-cyan text-cyber-bg font-bold transition-all">
+                  [ID] Penjelasan
+                </button>
+                <button type="button" data-bio-tab="de" class="bio-tab-btn px-2.5 py-1 rounded bg-cyber-bg border border-cyber-cyan/40 text-slate-300 hover:text-cyber-cyan transition-all">
+                  [DE] Erklärung
+                </button>
+                <button type="button" data-bio-tab="roadmap" class="bio-tab-btn px-2.5 py-1 rounded bg-cyber-bg border border-cyber-magenta/40 text-cyber-magenta hover:bg-cyber-magenta hover:text-white transition-all">
+                  [LOG] Roadmap
+                </button>
+              </div>
+            </div>
+
+            <div id="bio-tab-content" class="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p>
+                <strong class="text-cyber-cyan">&gt; Profil &amp; Latar Belakang:</strong> Halo! Saya Wildan, pelajar dan pengembang web pemula asal <strong>Jambi, Indonesia</strong> yang menempuh pendidikan di pondok pesantren modern <strong>Daar el Qolam 4</strong>. Perpaduan disiplin pesantren, penguasaan bahasa asing (Jerman, Inggris, Arab), dan pemrograman web menjadi fondasi saya untuk mengejar beasiswa studi ilmu komputer di <strong>MIT</strong> dan berkarier sebagai Software Engineer di <strong>Google</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Commented out section retained as requested -->
+          <!-- <p>
+            Saya sedang berkuliah di STT Terpadu Nurul Fikri dengan mengambil
+            <br />
+            jurusan Teknik Informatika. Kadang kala mempunyai motivasi untuk<br />
+            belajar dan meningkatkan keterampilan baru. Saya berharap dapat
+            lebih<br />
+            berkembang untuk kedepannya untuk mendapatkan <br />pengalaman kerja
+            dunia nyata di web development.
+          </p> -->
+
+          <div class="pt-2 flex flex-wrap items-center gap-4">
+            <a class="about_btn inline-block" href="mailto:muhaisim7@gmail.com">
+              <button class="neon-btn bg-cyber-card border border-cyber-magenta text-cyber-magenta font-mono font-bold px-6 py-3 rounded uppercase tracking-wider text-sm flex items-center gap-2 hover:bg-cyber-magenta hover:text-white transition-all shadow-[0_0_15px_rgba(255,0,127,0.3)]">
+                <i class="fa fa-briefcase"></i> Hire me
+              </button>
+            </a>
+
+            <div class="about-icons flex items-center gap-3">
+              <a href="https://www.linkedin.com/in/7muh-ismail/" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-cyan/50 text-cyber-cyan flex items-center justify-center text-lg hover:bg-cyber-cyan hover:text-cyber-bg transition-all" aria-label="LinkedIn">
+                <i class="fa fa-linkedin-square"></i>
+              </a>
+              <a href="https://github.com/hasyim404" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-cyan/50 text-cyber-cyan flex items-center justify-center text-lg hover:bg-cyber-cyan hover:text-cyber-bg transition-all" aria-label="GitHub">
+                <i class="fa fa-github"></i>
+              </a>
+              <a href="https://www.facebook.com/ismailhere.7/" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-cyan/50 text-cyber-cyan flex items-center justify-center text-lg hover:bg-cyber-cyan hover:text-cyber-bg transition-all" aria-label="Facebook">
+                <i class="fa fa-facebook-square"></i>
+              </a>
+              <a href="https://www.instagram.com/muhh.ismail__/" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-cyan/50 text-cyber-cyan flex items-center justify-center text-lg hover:bg-cyber-cyan hover:text-cyber-bg transition-all" aria-label="Instagram">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Required Image Container with Cyberpunk Glitch Frame & Stylish SVG Fallback -->
+        <div class="img_about lg:col-span-5 flex flex-col items-center reveal-node">
+          <div class="relative p-3 bg-cyber-card neon-border-cyan rounded-xl transform hover:rotate-1 transition-transform group">
+            <div class="absolute -top-3 -right-3 bg-cyber-magenta text-cyber-bg font-mono text-[10px] font-bold px-2 py-0.5 rounded uppercase z-20">
+              SYS.AVATAR//01
+            </div>
+            <div class="absolute -bottom-3 -left-3 bg-cyber-cyan text-cyber-bg font-mono text-[10px] font-bold px-2 py-0.5 rounded uppercase z-20">
+              WILDAN // DE-QOLAM 4
+            </div>
+            <img
+              src="C:\Users\43896\43896.jpeg"
+              alt="about img"
+              class="w-64 h-64 sm:w-80 sm:h-80 object-cover rounded filter contrast-125 saturate-150"
+              onerror="this.style.display='none'; document.getElementById('cyber-avatar-fallback').classList.remove('hidden');"
+            />
+            <!-- Stylish Cyberpunk Developer Avatar SVG Fallback if local path is unavailable -->
+            <div id="cyber-avatar-fallback" class="hidden w-64 h-64 sm:w-80 sm:h-80 rounded bg-cyber-bg border border-cyber-cyan/30 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+              <svg viewBox="0 0 200 200" class="w-48 h-48">
+                <defs>
+                  <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00f0ff" />
+                    <stop offset="100%" stop-color="#ff007f" />
+                  </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="url(#cyberGrad)" stroke-width="2" stroke-dasharray="10 5" />
+                <circle cx="100" cy="78" r="34" fill="#12121f" stroke="#00f0ff" stroke-width="3" />
+                <rect x="74" y="68" width="52" height="14" rx="4" fill="#00f0ff" opacity="0.85" />
+                <line x1="100" y1="68" x2="100" y2="82" stroke="#0a0a12" stroke-width="3" />
+                <path d="M45 170 C45 130, 155 130, 155 170" fill="#12121f" stroke="#ff007f" stroke-width="3" />
+                <text x="100" y="156" text-anchor="middle" fill="#00f0ff" font-family="monospace" font-size="11" font-weight="bold">WILDAN.EXE</text>
+              </svg>
+              <span class="font-mono text-[10px] text-slate-400 mt-1 text-center">LOCAL PATH: C:\Users\43896\43896.jpeg</span>
+            </div>
+          </div>
+          <p class="font-mono text-[11px] text-slate-400 mt-4 text-center max-w-xs">
+            [PORTRAIT_NODE]: Identitas visual pengembang &amp; pelajar pesantren menuju panggung teknologi global.
+          </p>
+        </div>
+      </div>
+
+      <!-- Wave / Bottom Separator -->
+      <div class="wave absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto block opacity-80">
+          <path
+            fill="#00f0ff"
+            fill-opacity="0.15"
+            d="M0,96L60,96C120,96,240,96,360,101.3C480,107,600,117,720,154.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="relative py-24 bg-cyber-card/60 border-y border-cyber-cyan/30 z-10 overflow-hidden">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal-node">
+        <div class="edu-title text-center mb-14">
+          <h1 class="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-wider glitch-text" data-text="my school">my school</h1>
+          <span class="text-cyber-cyan font-mono text-sm tracking-widest mt-2 block">———o———</span>
+          <p class="font-mono text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto mt-3">
+            Jejak pendidikan yang membentuk karakter, disiplin waktu, penguasaan bahasa asing (Jerman, Arab, Inggris), serta kemandirian belajar teknologi informasi.
+          </p>
+        </div>
+
+        <div class="row grid grid-cols-1 md:grid-cols-11 gap-6 items-stretch">
+          <!-- Col 1: SD IT An-Nahl -->
+          <div class="col1 md:col-span-5 bg-cyber-bg p-6 rounded neon-border-cyan flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-cyber-cyan/15 text-cyber-cyan font-mono text-[10px] uppercase">STAGE 01 // PRIMARY</span>
+                <span class="font-mono text-xs text-cyber-magenta font-bold">angkatan - 8</span>
+              </div>
+              <h2 class="font-display font-bold text-lg text-cyber-cyan uppercase">sd it an-nahl percikan iman jambi</h2>
+              <p class="date-edu font-mono text-xs text-cyber-magenta mt-1">angkatan - 8</p>
+              <p class="desc-edu font-mono text-xs text-slate-300 mt-1">sekolah islam terpadu</p>
+              <p class="font-mono text-xs text-slate-400 mt-3 leading-relaxed border-t border-cyber-cyan/20 pt-3">
+                Fondasi pendidikan dasar di Jambi yang menanamkan nilai akhlak, rasa ingin tahu pada sains &amp; komputer, serta kebiasaan belajar terstruktur sejak dini.
+              </p>
+            </div>
+
+            <div class="mt-4 pt-2">
+              <button
+                type="button"
+                onclick="toggleEduDetail('edu-detail-1')"
+                class="w-full py-2 px-3 rounded bg-cyber-card border border-cyber-cyan/50 text-cyber-cyan font-mono text-xs hover:bg-cyber-cyan hover:text-cyber-bg transition-all flex items-center justify-between"
+              >
+                <span>[+ VIEW ACADEMIC LOG]</span>
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+              <div id="edu-detail-1" class="hidden mt-3 p-3 rounded bg-cyber-card/90 border border-cyber-cyan/30 font-mono text-xs text-slate-300 space-y-1.5">
+                <p class="text-cyber-cyan font-bold">&gt; Fokus Pembelajaran:</p>
+                <ul class="list-disc list-inside text-slate-400 space-y-1">
+                  <li>Pembentukan karakter &amp; kedisiplinan dasar.</li>
+                  <li>Pengenalan literasi digital &amp; logika matematika.</li>
+                  <li>Aktif dalam kegiatan ekstrakurikuler akademik.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Timeline Connector Dots -->
+          <div class="col2 md:col-span-1 flex flex-col items-center justify-center py-2 text-cyber-cyan">
+            <ul class="flex md:flex-col items-center gap-3">
+              <li class="w-3.5 h-3.5 rounded-full bg-cyber-cyan shadow-[0_0_10px_#00f0ff]"></li>
+              <li class="w-8 h-0.5 md:w-0.5 md:h-12 bg-gradient-to-r md:bg-gradient-to-b from-cyber-cyan to-cyber-magenta"></li>
+              <li class="w-3.5 h-3.5 rounded-full bg-cyber-magenta shadow-[0_0_10px_#ff007f]"></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Daar el Qolam 4 -->
+          <div class="col3 md:col-span-5 bg-cyber-bg p-6 rounded neon-border-magenta flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-cyber-magenta/15 text-cyber-magenta font-mono text-[10px] uppercase">STAGE 02 // BOARDING</span>
+                <span class="font-mono text-xs text-cyber-cyan font-bold">angkatan - 16</span>
+              </div>
+              <h2 class="font-display font-bold text-lg text-cyber-magenta uppercase">daar el qolam4</h2>
+              <p class="date-edu font-mono text-xs text-cyber-cyan mt-1">angkatan - 16</p>
+              <p class="desc-edu font-mono text-xs text-slate-300 mt-1">pondok pesantren(islamic boarding school)</p>
+              <p class="font-mono text-xs text-slate-400 mt-3 leading-relaxed border-t border-cyber-magenta/20 pt-3">
+                Menempuh pendidikan berasrama penuh dengan penguasaan multibahasa (Bahasa Jerman, Inggris, dan Arab) sembari mendalami pengembangan web secara otodidak menuju target MIT &amp; Google.
+              </p>
+            </div>
+
+            <div class="mt-4 pt-2">
+              <button
+                type="button"
+                onclick="toggleEduDetail('edu-detail-2')"
+                class="w-full py-2 px-3 rounded bg-cyber-card border border-cyber-magenta/50 text-cyber-magenta font-mono text-xs hover:bg-cyber-magenta hover:text-white transition-all flex items-center justify-between"
+              >
+                <span>[+ VIEW ACADEMIC LOG]</span>
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+              <div id="edu-detail-2" class="hidden mt-3 p-3 rounded bg-cyber-card/90 border border-cyber-magenta/30 font-mono text-xs text-slate-300 space-y-1.5">
+                <p class="text-cyber-magenta font-bold">&gt; Pencapaian &amp; Fokus:</p>
+                <ul class="list-disc list-inside text-slate-400 space-y-1">
+                  <li>Komunikasi aktif multibahasa (Deutsch, English, Arabic).</li>
+                  <li>Manajemen waktu mandiri antara kurikulum pesantren &amp; coding.</li>
+                  <li>Persiapan akademik &amp; portofolio untuk pendaftaran MIT.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Wave inside Education -->
+      <div class="wave mt-12 -mb-24 overflow-hidden leading-none pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto block opacity-40">
+          <path
+            fill="#0284c7"
+            fill-opacity="0.25"
+            d="M0,224L60,202.7C120,181,240,139,360,144C480,149,600,203,720,213.3C840,224,960,192,1080,197.3C1200,203,1320,245,1380,266.7L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skill" class="py-24 relative z-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-node">
+        <div class="skill-title text-center mb-10">
+          <h1 class="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-wider glitch-text" data-text="Skills">Skills</h1>
+          <span class="text-cyber-magenta font-mono text-sm tracking-widest mt-2 block">——o—o——</span>
+          <p class="font-mono text-sm text-slate-400 mt-1">Programming languages<br />and tools.</p>
+          <p class="font-mono text-xs text-slate-400 max-w-2xl mx-auto mt-3">
+            Kumpulan bahasa pemrograman, framework, dan perangkat pengembangan web yang saya kuasai. <span class="text-cyber-cyan">Klik salah satu kartu teknologi</span> untuk melihat penjelasan fungsi dan tingkat penguasaan.
+          </p>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-8 font-mono text-xs">
+          <button type="button" data-filter="all" class="skill-filter-btn px-4 py-2 rounded bg-cyber-cyan text-cyber-bg font-bold uppercase tracking-wider transition-all">
+            All (12)
+          </button>
+          <button type="button" data-filter="frontend" class="skill-filter-btn px-4 py-2 rounded bg-cyber-card border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan uppercase tracking-wider transition-all">
+            Frontend
+          </button>
+          <button type="button" data-filter="backend" class="skill-filter-btn px-4 py-2 rounded bg-cyber-card border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan uppercase tracking-wider transition-all">
+            Backend &amp; DB
+          </button>
+          <button type="button" data-filter="tools" class="skill-filter-btn px-4 py-2 rounded bg-cyber-card border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan uppercase tracking-wider transition-all">
+            Tools &amp; UI
+          </button>
+        </div>
+
+        <!-- Holographic Terminal Skill Inspector -->
+        <div id="skill-inspector" class="mb-10 bg-cyber-card/90 border border-cyber-cyan/60 rounded-lg p-5 shadow-[0_0_20px_rgba(0,240,255,0.15)]">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 font-mono text-xs text-cyber-magenta uppercase">
+                <i class="fa-solid fa-crosshairs animate-spin"></i>
+                <span>HOLOGRAPHIC SKILL INSPECTOR // ACTIVE MODULE</span>
+              </div>
+              <h3 id="inspector-name" class="font-display font-bold text-xl text-white">HTML (HyperText Markup Language)</h3>
+              <p id="inspector-desc" class="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Digunakan untuk menyusun kerangka semantik halaman web modern yang aksesibel, SEO-friendly, dan terstruktur rapi.
+              </p>
+            </div>
+            <div class="md:w-64 shrink-0 bg-cyber-bg p-3 rounded border border-cyber-cyan/30 font-mono">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-slate-400">PROFICIENCY:</span>
+                <span id="inspector-level" class="text-cyber-cyan font-bold uppercase">MEDIUM (70%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-cyber-card rounded-full overflow-hidden border border-cyber-cyan/30">
+                <div id="inspector-bar" class="h-full bg-gradient-to-r from-cyber-cyan to-cyber-magenta transition-all duration-500" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-wrapper space-y-6">
+          <div class="items grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+            <div data-category="frontend" data-skill="HTML" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan text-center shadow-[0_0_15px_rgba(0,240,255,0.25)] transition-all flex flex-col items-center">
+              <img src="assets/html.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">HTML</p>
+              <p class="medium font-mono text-xs text-cyber-cyan mt-1">medium</p>
+            </div>
+            <div data-category="frontend" data-skill="CSS" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan/40 text-center hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/css.svg" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">CSS</p>
+              <p class="medium font-mono text-xs text-cyber-cyan mt-1">medium</p>
+            </div>
+            <div data-category="frontend" data-skill="JavaScript" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan/40 text-center hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/js.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">JavaScript</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="backend" data-skill="PHP" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan/40 text-center hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/php.svg" alt="" width="80" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">PHP</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="frontend" data-skill="Bootstrap" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan/40 text-center hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/bootstrap.png" alt="" width="80" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">Bootstrap</p>
+              <p class="medium font-mono text-xs text-cyber-cyan mt-1">medium</p>
+            </div>
+            <div data-category="backend" data-skill="CodeIgniter" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-cyan/40 text-center hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/codeigniter.png" alt="" width="60" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/codeigniter/codeigniter-plain.svg'" />
+              <p class="font-mono font-bold text-sm text-white" style="margin-left: -5px">CodeIgniter</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+          </div>
+
+          <div class="items grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+            <div data-category="backend" data-skill="Laravel" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/laravel.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">Laravel</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="frontend" data-skill="ReactJS" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/reactjs.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">ReactJS</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="backend" data-skill="phpMyAdmin" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/phpmyadmin.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white" style="margin-left: -14px">phpMyAdmin</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="tools" data-skill="Github" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/github.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">Github</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="tools" data-skill="Postman" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/postman.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">Postman</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+            <div data-category="tools" data-skill="Figma" class="skill-card cursor-pointer d-col-1 t-col-4 m-col-12 bg-cyber-card p-5 rounded border border-cyber-magenta/40 text-center hover:border-cyber-magenta hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all flex flex-col items-center">
+              <img src="assets/figma.png" alt="" class="w-12 h-12 object-contain mb-3" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg'" />
+              <p class="font-mono font-bold text-sm text-white">Figma</p>
+              <p class="basic font-mono text-xs text-cyber-yellow mt-1">basic</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-cyber-card/40 border-t border-cyber-magenta/30 relative z-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-node">
+        <div class="contact-title text-center mb-14">
+          <h1 class="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-wider glitch-text" data-text="Contact">Contact</h1>
+          <span class="text-cyber-cyan font-mono text-sm tracking-widest mt-2 block">——o—o—o——</span>
+          <p class="font-mono text-sm text-slate-400 mt-1">Contact me for more</p>
+          <p class="font-mono text-xs text-slate-400 max-w-2xl mx-auto mt-3">
+            Terbuka untuk kolaborasi pembuatan website, kelompok belajar pemrograman, diskusi persiapan studi ke MIT, maupun masukan untuk pengembangan proyek berikutnya.
+          </p>
+        </div>
+
+        <div class="row grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-cyber-bg p-6 sm:p-8 rounded-xl neon-border-cyan">
+          <div class="col left lg:col-span-5 flex flex-col items-center space-y-5">
+            <img
+              src="assets/img-form.svg"
+              alt=""
+              class="w-full max-w-xs filter drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]"
+              onerror="this.style.display='none'; document.getElementById('cyber-comms-svg').classList.remove('hidden');"
+            />
+            <!-- Custom Cyberpunk Terminal Illustration Fallback -->
+            <svg id="cyber-comms-svg" viewBox="0 0 320 230" class="hidden w-full max-w-xs">
+              <rect x="20" y="20" width="280" height="175" rx="12" fill="#12121f" stroke="#00f0ff" stroke-width="2" />
+              <circle cx="42" cy="38" r="5" fill="#ff007f" />
+              <circle cx="58" cy="38" r="5" fill="#f3e600" />
+              <circle cx="74" cy="38" r="5" fill="#00ff66" />
+              <line x1="20" y1="54" x2="300" y2="54" stroke="#00f0ff" stroke-opacity="0.3" />
+              <text x="38" y="82" fill="#00f0ff" font-family="monospace" font-size="12">&gt; INIT SECURE_CHANNEL...</text>
+              <text x="38" y="106" fill="#00ff66" font-family="monospace" font-size="12">&gt; ENCRYPTION: AES-256 [OK]</text>
+              <text x="38" y="130" fill="#ff007f" font-family="monospace" font-size="12">&gt; DEST: WILDAN // JAMBI_ID</text>
+              <rect x="38" y="148" width="244" height="28" rx="6" fill="#0a0a12" stroke="#ff007f" stroke-dasharray="4 3" />
+              <text x="160" y="166" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="11">READY FOR TRANSMISSION</text>
+            </svg>
+
+            <!-- Quick-Copy Direct Comms Chips -->
+            <div class="w-full max-w-xs bg-cyber-card p-4 rounded border border-cyber-cyan/30 font-mono text-xs space-y-2.5">
+              <p class="text-cyber-cyan font-bold uppercase tracking-wider">&gt; Direct Channels:</p>
+              <button
+                type="button"
+                onclick="copyText('wildanhusainiabdillah@gmail.com')"
+                class="w-full px-3 py-2 rounded bg-cyber-bg border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan transition-all flex items-center justify-between"
+              >
+                <span class="truncate"><i class="fa-solid fa-envelope text-cyber-magenta mr-1.5"></i>muhaisim7@gmail.com</span>
+                <span class="text-[10px] text-cyber-cyan">[COPY]</span>
+              </button>
+              <button
+                type="button"
+                onclick="copyText('+6289687601023', 'WhatsApp')"
+                class="w-full px-3 py-2 rounded bg-cyber-bg border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan transition-all flex items-center justify-between"
+              >
+                <span><i class="fa fa-whatsapp text-cyber-green mr-1.5"></i>+62 896-8760-1023</span>
+                <span class="text-[10px] text-cyber-cyan">[COPY]</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="col right lg:col-span-7">
+            <!-- <h2>STT Terpadu Nurul Fikri</h2> -->
+            <form id="cyber-contact-form" action="javascript:" method="post" class="space-y-4 font-mono">
+              <div>
+                <label for="name" class="block text-xs uppercase text-cyber-cyan mb-1 font-bold">Fullname</label>
+                <input type="text" name="name" id="name" placeholder="Masukkan nama lengkap Anda..." required class="w-full bg-cyber-card border border-cyber-cyan/50 rounded px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyber-cyan focus:shadow-[0_0_10px_rgba(0,240,255,0.4)]" />
+              </div>
+              <div>
+                <label for="email" class="block text-xs uppercase text-cyber-cyan mb-1 font-bold">Email</label>
+                <input type="email" name="email" id="email" placeholder="nama@domain.com" required class="w-full bg-cyber-card border border-cyber-cyan/50 rounded px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyber-cyan focus:shadow-[0_0_10px_rgba(0,240,255,0.4)]" />
+              </div>
+              <div>
+                <label for="subject" class="block text-xs uppercase text-cyber-cyan mb-1 font-bold">Subject</label>
+                <input type="text" name="subject" id="subject" placeholder="Topik pesan atau kolaborasi..." required class="w-full bg-cyber-card border border-cyber-cyan/50 rounded px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyber-cyan focus:shadow-[0_0_10px_rgba(0,240,255,0.4)]" />
+              </div>
+              <div>
+                <label for="topic" class="block text-xs uppercase text-cyber-cyan mb-1 font-bold">Topic</label>
+                <select name="topic" id="topic" class="w-full bg-cyber-card border border-cyber-cyan/50 rounded px-4 py-3 text-white focus:outline-none focus:border-cyber-cyan">
+                  <option value="information">Information</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="other">Others</option>
+                </select>
+              </div>
+
+              <!-- <textarea name="subject" id="subject" cols="10" rows="5"></textarea> -->
+
+              <div class="btn-form pt-2 flex flex-wrap items-center gap-4">
+                <input type="submit" name="submit" id="submit" value="Submit" class="neon-btn bg-cyber-cyan text-cyber-bg font-bold uppercase tracking-wider px-8 py-3 rounded cursor-pointer hover:bg-cyber-magenta hover:text-white transition-all w-full sm:w-auto" />
+                <span class="text-[11px] text-slate-400">Respons transmisi otomatis melalui terminal HUD.</span>
+              </div>
+            </form>
+
+            <!-- Live Terminal Transmission Log Output -->
+            <div id="transmission-log" class="hidden mt-5 p-4 rounded bg-cyber-card border border-cyber-green/50 font-mono text-xs space-y-1">
+              <p class="text-cyber-green font-bold">[TRANSMISSION_COMPLETE] Packet logged:</p>
+              <p id="log-details" class="text-slate-300"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative bg-cyber-bg pt-12 pb-8 border-t border-cyber-cyan/30 z-10">
+      <div class="wave absolute -top-24 left-0 right-0 overflow-hidden leading-none pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto block opacity-40">
+          <path
+            fill="#ff007f"
+            fill-opacity="0.2"
+            d="M0,128L48,117.3C96,107,192,85,288,85.3C384,85,480,107,576,101.3C672,96,768,64,864,69.3C960,75,1056,117,1152,117.3C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+
+      <div class="foot-content max-w-4xl mx-auto px-4 text-center font-mono">
+        <p class="text-cyber-cyan font-bold tracking-wider">Interest with me ?</p>
+        <p class="text-slate-400 text-sm mt-1">Follow My Social Media</p>
+
+        <div class="social-icons flex items-center justify-center gap-4 my-6">
+          <a href="https://www.facebook.com/ismailhere.7/" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-magenta text-cyber-magenta flex items-center justify-center text-lg hover:bg-cyber-magenta hover:text-white transition-all" aria-label="Facebook">
+            <i class="fa fa-facebook-square"></i>
+          </a>
+          <a href="https://www.instagram.com/muhh.ismail__/" target="_blank" class="w-10 h-10 rounded bg-cyber-card border border-cyber-magenta text-cyber-magenta flex items-center justify-center text-lg hover:bg-cyber-magenta hover:text-white transition-all" aria-label="Instagram">
+            <i class="fa fa-instagram"></i>
+          </a>
+        </div>
+
+        <div class="createby border-t border-cyber-cyan/20 pt-6 text-xs text-slate-500 space-y-1">
+          <p>&copy; Muhammad ismail, 2023.</p>
+          <p>All rights reserved. [CYBER_EDITION]</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+      // Web Audio API Cyber Synth Sound Effect Engine (Zero External Files)
+      let soundEnabled = false;
+      let audioCtx = null;
+
+      function playCyberTone(freq = 520, type = "sine", duration = 0.07) {
+        if (!soundEnabled) return;
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === "suspended") {
+            audioCtx.resume();
+          }
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.4, audioCtx.currentTime + duration);
+          gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch (err) {
+          // Ignore audio errors on restricted devices
+        }
+      }
+
+      // Toggle Academic Log Details in Education Section
+      function toggleEduDetail(id) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.toggle("hidden");
+          playCyberTone(640, "triangle", 0.08);
+        }
+      }
+
+      // Clipboard Helper using execCommand fallback for iFrame safety
+      function copyText(text, label) {
+        const tempInput = document.createElement("textarea");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand("copy");
+          showToast(`${label} [${text}] berhasil disalin ke clipboard.`);
+          playCyberTone(780, "sine", 0.09);
+        } catch (err) {
+          showToast(`Gagal menyalin ${label}.`);
+        }
+        document.body.removeChild(tempInput);
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("cyber-toast");
+        const toastText = document.getElementById("toast-text");
+        toastText.textContent = message;
+        toast.classList.remove("translate-y-32", "opacity-0");
+        setTimeout(() => {
+          toast.classList.add("translate-y-32", "opacity-0");
+        }, 4000);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. Live HUD Clock & Visitor Node ID
+        const clockEl = document.getElementById("hud-clock");
+        const visitorEl = document.getElementById("visitor-id");
+        if (visitorEl) {
+          visitorEl.textContent = "NODE-" + Math.floor(1000 + Math.random() * 9000);
+        }
+        function updateClock() {
+          if (clockEl) {
+            const now = new Date();
+            clockEl.textContent = now.toTimeString().split(" ")[0];
+          }
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // 2. Sound & Glitch Overdrive Toggles
+        const soundBtn = document.getElementById("toggle-sound");
+        const soundIcon = document.getElementById("sound-icon");
+        const soundLabel = document.getElementById("sound-label");
+        soundBtn.addEventListener("click", () => {
+          soundEnabled = !soundEnabled;
+          soundLabel.textContent = soundEnabled ? "SFX: ON" : "SFX: OFF";
+          soundIcon.className = soundEnabled ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
+          if (soundEnabled) playCyberTone(880, "square", 0.1);
+        });
+
+        const overdriveBtn = document.getElementById("toggle-overdrive");
+        const overdriveLabel = document.getElementById("overdrive-label");
+        overdriveBtn.addEventListener("click", () => {
+          document.body.classList.toggle("glitch-overdrive");
+          const active = document.body.classList.contains("glitch-overdrive");
+          overdriveLabel.textContent = active ? "OVERDRIVE: MAX" : "OVERDRIVE: STD";
+          playCyberTone(active ? 920 : 420, "sawtooth", 0.1);
+          showToast(active ? "Glitch Overdrive diaktifkan!" : "Mode standar dipulihkan.");
+        });
+
+        // 3. Typewriter Effect for Title
+        const phrases = [
+          "Ich bin Webentwickler-Anfänger.",
+          "Future MIT Scholar.",
+          "Google Engineer Aspirant."
+        ];
+        const titleEl = document.getElementById("typewriter-title");
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+
+        function typeLoop() {
+          const current = phrases[phraseIdx];
+          if (isDeleting) {
+            titleEl.textContent = current.substring(0, charIdx - 1);
+            titleEl.setAttribute("data-text", titleEl.textContent);
+            charIdx--;
+          } else {
+            titleEl.textContent = current.substring(0, charIdx + 1);
+            titleEl.setAttribute("data-text", titleEl.textContent);
+            charIdx++;
+          }
+
+          let speed = isDeleting ? 40 : 80;
+
+          if (!isDeleting && charIdx === current.length) {
+            speed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIdx === 0) {
+            isDeleting = false;
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+            speed = 400;
+          }
+
+          setTimeout(typeLoop, speed);
+        }
+        typeLoop();
+
+        // 4. Interactive Tabbed System Bio & Mission Log
+        const bioData = {
+          id: `<p><strong class="text-cyber-cyan">&gt; Profil &amp; Latar Belakang:</strong> Halo! Saya Wildan, pelajar dan pengembang web pemula asal <strong>Jambi, Indonesia</strong> yang menempuh pendidikan di pondok pesantren modern <strong>Daar el Qolam 4</strong>. Perpaduan disiplin pesantren, penguasaan bahasa asing (Jerman, Inggris, Arab), dan pemrograman web menjadi fondasi saya untuk mengejar beasiswa studi ilmu komputer di <strong>MIT</strong> dan berkarier sebagai Software Engineer di <strong>Google</strong>.</p>`,
+          de: `<p><strong class="text-cyber-cyan">&gt; Über Mich (Deutsch):</strong> Hallo! Ich heiße Wildan, komme aus <strong>Jambi, Indonesien</strong> und besuche das islamische Internat <strong>Daar el Qolam 4</strong>. Neben meiner schulischen Ausbildung lerne ich leidenschaftlich Webentwicklung, um nach meinem Abschluss am <strong>MIT</strong> zu studieren und später als Softwareentwickler bei <strong>Google</strong> zu arbeiten.</p>`,
+          roadmap: `<ul class="space-y-1 text-slate-300">
+            <li><span class="text-cyber-green">[FASE 01 - AKTIF]</span> Menguasai fundamental Web Development (HTML, CSS, JS, PHP, Laravel, React) &amp; bahasa asing di Daar el Qolam 4.</li>
+            <li><span class="text-cyber-cyan">[FASE 02 - TARGET]</span> Melanjutkan studi sarjana Computer Science di <strong>Massachusetts Institute of Technology (MIT)</strong>.</li>
+            <li><span class="text-cyber-magenta">[FASE 03 - VISI]</span> Berkontribusi membangun teknologi berdampak global sebagai Software Engineer di <strong>Google</strong>.</li>
+          </ul>`
+        };
+
+        const bioTabBtns = document.querySelectorAll(".bio-tab-btn");
+        const bioContent = document.getElementById("bio-tab-content");
+        bioTabBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const tab = btn.getAttribute("data-bio-tab");
+            bioTabBtns.forEach((b) => {
+              b.className = "bio-tab-btn px-2.5 py-1 rounded bg-cyber-bg border border-cyber-cyan/40 text-slate-300 hover:text-cyber-cyan transition-all";
+            });
+            btn.className = "bio-tab-btn px-2.5 py-1 rounded bg-cyber-cyan text-cyber-bg font-bold transition-all";
+            bioContent.innerHTML = bioData[tab] || bioData.id;
+            playCyberTone(600, "sine", 0.06);
+          });
+        });
+
+        // 5. Interactive Skill Filter & Holographic Inspector
+        const skillDetails = {
+          HTML: {
+            full: "HTML (HyperText Markup Language)",
+            level: "MEDIUM (70%)",
+            pct: "70%",
+            desc: "Digunakan untuk menyusun kerangka semantik halaman web modern yang aksesibel, SEO-friendly, dan terstruktur rapi."
+          },
+          CSS: {
+            full: "CSS3 (Cascading Style Sheets)",
+            level: "MEDIUM (70%)",
+            pct: "70%",
+            desc: "Mengatur tata letak responsif (Flexbox & Grid), animasi keyframe, efek neon cyberpunk, dan estetika antarmuka."
+          },
+          JavaScript: {
+            full: "JavaScript (ES6+)",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Menghidupkan interaktivitas halaman web, manipulasi DOM dinamis, animasi typewriter, dan validasi formulir."
+          },
+          PHP: {
+            full: "PHP (Hypertext Preprocessor)",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Pemrograman sisi server (backend) untuk memproses logika aplikasi web dinamis dan koneksi database."
+          },
+          Bootstrap: {
+            full: "Bootstrap CSS Framework",
+            level: "MEDIUM (70%)",
+            pct: "70%",
+            desc: "Mempercepat pembuatan komponen antarmuka responsif berbasis sistem grid standar industri."
+          },
+          CodeIgniter: {
+            full: "CodeIgniter PHP Framework",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Framework PHP ringan berarsitektur MVC untuk membangun aplikasi web terstruktur dengan cepat."
+          },
+          Laravel: {
+            full: "Laravel Web Framework",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Framework PHP modern dengan sintaks elegan, routing, Eloquent ORM, dan sistem autentikasi terintegrasi."
+          },
+          ReactJS: {
+            full: "ReactJS UI Library",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Membangun antarmuka pengguna berbasis komponen yang reaktif dan modular untuk aplikasi web modern."
+          },
+          phpMyAdmin: {
+            full: "phpMyAdmin & MySQL Database",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Mengelola basis data relasional MySQL, merancang tabel, serta menjalankan kueri SQL untuk penyimpanan data."
+          },
+          Github: {
+            full: "GitHub Version Control",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Menyimpan repositori kode sumber, melacak perubahan versi proyek, dan berkolaborasi secara daring."
+          },
+          Postman: {
+            full: "Postman API Platform",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Menguji endpoint REST API (GET, POST, PUT, DELETE) dan memverifikasi pertukaran data JSON."
+          },
+          Figma: {
+            full: "Figma UI/UX Design Tool",
+            level: "BASIC (45%)",
+            pct: "45%",
+            desc: "Merancang wireframe, prototipe antarmuka pengguna, dan sistem warna sebelum tahap penulisan kode."
+          }
+        };
+
+        const skillCards = document.querySelectorAll(".skill-card");
+        const filterBtns = document.querySelectorAll(".skill-filter-btn");
+        const inspName = document.getElementById("inspector-name");
+        const inspDesc = document.getElementById("inspector-desc");
+        const inspLevel = document.getElementById("inspector-level");
+        const inspBar = document.getElementById("inspector-bar");
+
+        skillCards.forEach((card) => {
+          card.addEventListener("click", () => {
+            const key = card.getAttribute("data-skill");
+            const info = skillDetails[key];
+            if (!info) return;
+
+            skillCards.forEach((c) => c.classList.remove("ring-2", "ring-cyber-cyan"));
+            card.classList.add("ring-2", "ring-cyber-cyan");
+
+            inspName.textContent = info.full;
+            inspDesc.textContent = info.desc;
+            inspLevel.textContent = info.level;
+            inspBar.style.width = info.pct;
+            playCyberTone(700, "triangle", 0.07);
+          });
+        });
+
+        filterBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const filter = btn.getAttribute("data-filter");
+            filterBtns.forEach((b) => {
+              b.className = "skill-filter-btn px-4 py-2 rounded bg-cyber-card border border-cyber-cyan/40 text-slate-300 hover:border-cyber-cyan uppercase tracking-wider transition-all";
+            });
+            btn.className = "skill-filter-btn px-4 py-2 rounded bg-cyber-cyan text-cyber-bg font-bold uppercase tracking-wider transition-all";
+
+            skillCards.forEach((card) => {
+              const cat = card.getAttribute("data-category");
+              if (filter === "all" || cat === filter) {
+                card.classList.remove("hidden");
+              } else {
+                card.classList.add("hidden");
+              }
+            });
+            playCyberTone(540, "sine", 0.06);
+          });
+        });
+
+        // 6. Mobile Menu Toggle
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+        menuToggle.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+        });
+
+        // 7. Contact Form Feedback with Toast & Terminal Log
+        const form = document.getElementById("cyber-contact-form");
+        const transLog = document.getElementById("transmission-log");
+        const logDetails = document.getElementById("log-details");
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const nameVal = document.getElementById("name").value.trim() || "Anonymous";
+          const subjectVal = document.getElementById("subject").value.trim();
+          const topicVal = document.getElementById("topic").value;
+
+          showToast(`Transmission received from [${nameVal}]. Data saved.`);
+          playCyberTone(840, "sine", 0.12);
+
+          if (transLog && logDetails) {
+            transLog.classList.remove("hidden");
+            logDetails.textContent = `Sender: ${nameVal} | Topic: ${topicVal.toUpperCase()} | Subject: "${subjectVal}"`;
+          }
+          form.reset();
+        });
+
+        // 8. Scroll Reveal Observer
+        const revealNodes = document.querySelectorAll(".reveal-node");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+        revealNodes.forEach((node) => observer.observe(node));
+
+        // 9. Custom Neon Cursor Follower (Desktop)
+        const cursorRing = document.getElementById("cursor-ring");
+        if (cursorRing) {
+          window.addEventListener("mousemove", (e) => {
+            cursorRing.style.left = e.clientX + "px";
+            cursorRing.style.top = e.clientY + "px";
+          });
+        }
+
+        // 10. Subtle Cyberpunk Particle Canvas
+        const canvas = document.getElementById("cyber-canvas");
+        if (canvas) {
+          const ctx = canvas.getContext("2d");
+          let particles = [];
+
+          function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          }
+          resizeCanvas();
+          window.addEventListener("resize", resizeCanvas);
+
+          for (let i = 0; i < 36; i++) {
+            particles.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              r: Math.random() * 1.8 + 0.6,
+              vx: (Math.random() - 0.5) * 0.4,
+              vy: (Math.random() - 0.5) * 0.4,
+              color: i % 2 === 0 ? "#00f0ff" : "#ff007f"
+            });
+          }
+
+          function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+              if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+          }
+          animateParticles();
+        }
+      });
+    </script>
+  </body>
+</html>
